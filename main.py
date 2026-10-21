@@ -1,5 +1,6 @@
 import time
 import os
+import colorsys
 versie = "1.0"
 
 GROEN = "\033[32m"
@@ -14,8 +15,6 @@ RESET = "\033[0m"
 
 def kleur_print(tekst, kleur):
     print(kleur + tekst + RESET)
-
-import colorsys
 
 def regenboog(tekst, snelheid=0.04):
     hue = 0
@@ -77,9 +76,9 @@ kleur_print("========== gegevens ==========", PAARS)
 print(f"Geld: €{Geld}")
 print(f"Inwoners: {Inwoners}")
 print(f"Tevredenheid: {tevredenheid}%")
-print(f"Schulden: €{schulden}", ROOD)
-print(f"maand: {maand}")
-print(f"Inkomsten: €{inkomsten}", GROEN)
+kleur_print(f"Schulden: €{schulden}", ROOD)
+kleur_print(f"maand: {maand}", GEEL)
+kleur_print(f"Inkomsten: €{inkomsten}", GROEN)
 print(f"huizen: {huizen}")
 print(f"winkels: {winkels}")
 print(f"fabrieken: {fabrieken}")
@@ -98,6 +97,7 @@ while maand <= 24:
             print("\r\033[30m" + tekst + "." * 5 + "\033[0m")
              #--------
             print("wat wil je doen?")
+            print("")
             print("1. stad bekijken")
             print("2. gegevens bekijken")
             print("3. volgende maand")
@@ -123,10 +123,10 @@ while maand <= 24:
                 print(f"Geld: €{Geld}")
                 print(f"inwoners: {Inwoners}")
                 print(f"huizen: {huizen}")
-                print(f"Schulden: €{schulden}", ROOD)
-                print(f"Inkomsten: €{inkomsten}", GROEN)
+                kleur_print(f"Schulden: €{schulden}", ROOD)
+                kleur_print(f"Inkomsten: €{inkomsten}", GROEN)
                 print(f"Tevredenheid: {tevredenheid}%")
-                print(f"maand: {maand}")
+                kleur_print(f"maand: {maand}", GEEL)
                 print(f"winkels: {winkels}")
                 print(f"fabrieken: {fabrieken}")
                 print(f"parken: {parken}")
@@ -187,6 +187,7 @@ while maand <= 24:
 
                 print("\r\033[30m" + tekst + "." * 5 + "\033[0m")
                 #--------
+                kleur_print(f"balans: €{Geld}", GROEN)
                 kleur_print("========== gebouwen ==========", PAARS)
                 print(" 1. huis     €500")
                 print(" 2. winkel   €1000")
