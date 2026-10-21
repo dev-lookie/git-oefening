@@ -1,7 +1,8 @@
 import time
 import os
 import colorsys
-versie = "1.0"
+import random
+versie = "1.7.5"
 
 GROEN = "\033[32m"
 ROOD = "\033[31m"
@@ -45,15 +46,15 @@ def regenboog(tekst, snelheid=0.04):
         print()
 
 
-Geld = 1000
+Geld = 10000
 Inwoners = 10
 tevredenheid = 75
 maand = 1
-huizen = 3
+huizen = 4
 schulden = 0
 schuldbedrag = 0
 inkomsten = 0
-winkels = 0
+winkels = 1
 fabrieken = 0
 parken = 0
 pretparken = 0
@@ -103,7 +104,8 @@ while maand <= 24:
             print("3. volgende maand")
             print("4. gebouw bouwen")
             print("5. geld lenen")
-            print("6. stoppen")
+            print("6. loterij spelen")
+            print("7. stoppen")
             kleur_print("------------------------------", BLAUW)
             keuze = input("maak een keuze:")
 
@@ -147,15 +149,66 @@ while maand <= 24:
                 if pretparken > 0:
                      print(f"je hebt {pretparken} pretparken, je krijgt €{pretparken * 1000} belasting van de pretparken!")
                 
-                Inkomsten = inkomsten + (winkels * 100) + (fabrieken * 500) + (pretparken * 1000) + (Inwoners * 10)
-                Geld += Inkomsten
-                
                 if winkels == 0 and pretparken == 0 and fabrieken == 0:
                     print("je hebt geen gebouwen die inkomsten opleveren")
                 
                 kleur_print("------------------------------", BLAUW)
+                
+                randomevent = random.randint(1, 10)
+                if randomevent == 1:
+                    kleur_print("er is een brand uitgebroken in je stad!", ROOD)
+                    schade = random.randint(100, 1000)
+                    print(f"je moet €{schade} betalen om de schade te herstellen")
+                    Geld = Geld - schade
+                
+                if randomevent == 2:
+                    kleur_print("er is een festival in je stad!", GROEN)
+                    tevredenheid = tevredenheid + 5
+                    print("je tevredenheid is gestegen met 5%")
+                
+                if randomevent == 3:
+                    kleur_print("er is een economische crisis in je stad!", ROOD)
+                    inkomsten = inkomsten - (inkomsten * 0.1)
+                    print("je inkomsten zijn gedaald met 10%")
+                
+                if randomevent == 4:
+                    kleur_print("er is een ongeluk gebeurd in je stad!", ROOD)
+                    schade = random.randint(50, 500)
+                    print(f"je moet €{schade} betalen om de schade te herstellen")
+                    Geld = Geld - schade
+                    
+                if randomevent == 5:
+                   kleur_print("het was een rustige maand.", GROEN)
+                    
+                if randomevent == 6:
+                    kleur_print("er is een nieuwe wet aangenomen in je stad!", GROEN)
+                    tevredenheid = tevredenheid + 10
+                    print("je tevredenheid is gestegen met 10%")
+                    
+                if randomevent == 7:
+                    kleur_print("het was een rustige maand.", GROEN)
+                    
+                if randomevent == 8:
+                    kleur_print("er is een nieuwe technologie ontwikkeld in je stad!", GROEN)
+                    inkomsten = inkomsten + (inkomsten * 0.1)
+                    print("je inkomsten zijn gestegen met 10%")
+                    
+                if randomevent == 9:
+                    kleur_print("er is een overval gepleegd in je stad!", ROOD)
+                    schade = random.randint(1, 500)
+                    print(f"je moet €{schade} betalen om de schade te herstellen")
+                    Geld = Geld - schade
+                    
+                if randomevent == 10:
+                    kleur_print("er is een nieuwe attractie geopend in je pretpark!", GROEN)
+                    tevredenheid = tevredenheid + 5
+                    print("je tevredenheid is gestegen met 5%")
+
+                kleur_print("------------------------------", BLAUW)
                 print(f"Geld: €{Geld}")
-                print(f"Inkomsten: €{inkomsten}", GROEN)
+                inkomsten = (winkels * 100) + (fabrieken * 500) + (pretparken * 1000) + (Inwoners * 10)
+                kleur_print(f"Inkomsten: €{inkomsten}", GROEN)
+                Geld += inkomsten
                 print(f"Inwoners: {Inwoners}")
                 print(f"huizen: {huizen}")
                 print(f"fabrieken: {fabrieken}")
@@ -163,10 +216,11 @@ while maand <= 24:
                 print(f"pretparken: {pretparken}")
                 print(f"Tevredenheid: {tevredenheid}%")
                 maand = maand + 1
+                inkomsten = 0
                 if maand > 24:
                     kleur_print("------------------------------", BLAUW)
                     regenboog("je hebt 24 maanden gespeeld, het spel is afgelopen, bedankt voor het spelen!")
-                    break
+                    exit()
                 
                 print(f"Maand: {maand}")
                 print("")
@@ -187,20 +241,22 @@ while maand <= 24:
 
                 print("\r\033[30m" + tekst + "." * 5 + "\033[0m")
                 #--------
-                kleur_print(f"balans: €{Geld}", GROEN)
+                if Geld <= 0:
+                    kleur_print(f"balans: €{Geld}", ROOD)
+                else:
+                    kleur_print(f"balans: €{Geld}", GROEN)
                 kleur_print("========== gebouwen ==========", PAARS)
                 print(" 1. huis     €500")
                 print(" 2. winkel   €1000")
                 print(" 3. park     €750")
                 print(" 4. fabriek  €5000")
-                print(" 5. pretpark: €10000")
+                print(" 5. pretpark €10000")
                 print(" 6. terug naar hoofdmenu")
                 kleur_print("------------------------------", BLAUW)
                 gebouw_keuze = input("wat wil je bouwen?")
                 if gebouw_keuze == "1":
                     if Geld >= 500:
                         print("je bouwt een huis")
-                        import random
                         inwoners_toevoegen = random.randint(1, 4)
                         print(f"je krijgt {inwoners_toevoegen} inwoners!")
                         print("")
@@ -245,6 +301,7 @@ while maand <= 24:
                         Geld = Geld - 10000
                         pretparken = pretparken + 1
                         tevredenheid = tevredenheid + 20
+                      
                     else:
                         print("je hebt niet genoeg geld om een pretpark te bouwen")
                 elif gebouw_keuze == "6":
@@ -263,15 +320,57 @@ while maand <= 24:
                 print(f"Schulden: €{schulden}")
                 
             elif keuze == "6":
+                os.system("cls" if os.name == "nt" else "clear")
+                tekst = "loading minigame"
+                
+                for i in range(4):
+                    print("\r" + tekst + "." * i + "\033[0m", end="", flush=True)
+                    time.sleep(1)
+                
+                print("\r\033[30m" + tekst + "." * 5 + "\033[0m")
+                #--------
+                
+                kleur_print("========= loterij spelen =========", PAARS)
+                print("je hebt gekozen om de loterij te spelen")
+                print("je kan €100 inzetten om mee te doen aan de loterij")
+                print("als je wint krijg je €10.000")
+                print("als je verliest verlies je €100")
+                print("")
+                loterij_keuze = input("wil je meedoen aan de loterij? (ja/nee)")
+                if loterij_keuze == "ja":
+                    if Geld >= 100:
+                        print("")
+                        print("je doet mee aan de loterij")
+                        Geld = Geld - 100
+                        loterij_winst = random.randint(1, 10)
+                        if loterij_winst in [1, 5, 9]:
+                            print("je hebt gewonnen!")
+                            Geld = Geld + 10000
+                            print(f"Geld: €{Geld}")
+                        else:
+                            print("je hebt verloren!")
+                            print(f"Geld: €{Geld}")
+                    else:
+                        print("je hebt niet genoeg geld om mee te doen aan de loterij")
+                elif loterij_keuze == "nee":
+                    print("je hebt gekozen om niet mee te doen aan de loterij")
+                else:
+                    kleur_print("dit is geen geldige invoer", ROOD)
+                    kleur_print("probeer ja of nee in te voeren", ROOD)
+                
+            elif keuze == "7":
                 print("je hebt gekozen om het spel te stoppen")
-                break
+                exit()
             
             elif keuze == "1983":
                 maand += 25
+            
+            elif keuze == "1982":
+                Geld += 1000000000
 
             else:
                 kleur_print("dit is geen geldige invoer", ROOD)
-                kleur_print("probeer 1, 2, 3, 4, 5 of 6 in te voeren", ROOD)
+                kleur_print("probeer 1, 2, 3, 4, 5, 6 of 7 in te voeren", ROOD)
                 
             if Geld <= 0:
                 kleur_print("------------------------------", BLAUW)
