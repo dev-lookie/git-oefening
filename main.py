@@ -2,7 +2,7 @@ import time
 import os
 import colorsys
 import random
-versie = "1.7.5"
+versie = "1.8"
 
 GROEN = "\033[32m"
 ROOD = "\033[31m"
@@ -377,5 +377,5 @@ while maand <= 24:
                 kleur_print("je hebt geen geld meer, je kan niet verder spelen", ORANJE)
                 kleur_print("leen geld van de bank om verder te spelen", ORANJE)
                 kleur_print("of ga door naar de volgende maand om inkomsten te krijgen", ORANJE)
-                print("verankerd")
+                print("")
                 
